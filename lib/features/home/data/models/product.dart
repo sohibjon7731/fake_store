@@ -1,11 +1,23 @@
-import 'package:fake_store/features/home/domain/entities/product.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+part 'product.freezed.dart';
 
 part 'product.g.dart';
 
-@JsonSerializable()
-class ProductModel extends ProductEntity {
-  @JsonKey(defaultValue: 0)
+@Freezed()
+class ProductModel with _$ProductModel {
+  const factory ProductModel({
+    @Default(0) int id,
+    @Default('') String title,
+    @Default(0) double prize,
+    @Default('') String description,
+    @Default('') String category,
+    @Default('') String image,
+    // ignore: invalid_annotation_target
+    @JsonKey(name: 'rating') ProductRatingModel? productRatingModel,
+  }) = _ProductModel;
+  /* @JsonKey(defaultValue: 0)
   final int id;
   @JsonKey(defaultValue: '')
   final String title;
@@ -27,10 +39,10 @@ class ProductModel extends ProductEntity {
     required this.category,
     required this.image,
     this.productRatingModel,
-  }):super(image: image, title: title);
+  }):super(image: image, title: title, rate: productRatingModel?.rate??0); */
   factory ProductModel.fromJson(Map<String, dynamic> data) =>
       _$ProductModelFromJson(data);
-  Map<String, dynamic> toJson() => _$ProductModelToJson(this);
+  /* Map<String, dynamic> toJson() => _$ProductModelToJson(this); */
 }
 
 @JsonSerializable()
